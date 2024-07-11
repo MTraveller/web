@@ -15,7 +15,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const modeCookie =
-    (cookies().get('colorMode')!.value as 'dark' | 'light') ?? 'dark';
+    (cookies().get('colorMode')?.value as 'dark' | 'light') ?? 'dark';
 
   console.log(typeof modeCookie, modeCookie);
 
