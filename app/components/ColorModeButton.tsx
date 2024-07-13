@@ -2,6 +2,7 @@
 
 import { setModeCookie } from '@/utils/modeCookie';
 import { Icon, useColorMode } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { FaMoon, FaSun } from 'react-icons/fa';
 
 interface Mode {
@@ -10,10 +11,19 @@ interface Mode {
 
 const ColorModeSwitch = ({ mode }: Mode) => {
   const { toggleColorMode } = useColorMode();
+  const getLocalStorageColorMode = () =>
+    localStorage.getItem('chakra-ui-color-mode') as 'dark' | 'light';
 
-  const handleClick = () => {
+  useEffect(() => {
+    const colorMode = getLocalStorageColorMode();
+    if (colorMode) {
+      setModeCookie(colorMode);
+    }
+  }, []);
+
+  const handleClick = async () => {
     toggleColorMode();
-    setModeCookie(mode);
+    setModeCookie(getLocalStorageColorMode());
   };
 
   const icon = {

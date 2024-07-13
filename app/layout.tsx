@@ -7,7 +7,6 @@ import ColorModeButton from './components/ColorModeButton';
 import Logo from './components/Logo';
 import './globals.css';
 import { Chakra } from './providers';
-import { Suspense } from 'react';
 
 export default async function RootLayout({
   children,
