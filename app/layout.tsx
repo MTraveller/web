@@ -17,8 +17,6 @@ export default async function RootLayout({
   const modeCookie =
     (cookies().get('colorMode')?.value as 'dark' | 'light') ?? 'dark';
 
-  console.log(typeof modeCookie, modeCookie);
-
   return (
     <html lang='en' style={{ colorScheme: modeCookie }} data-theme={modeCookie}>
       <body className={`chakra-ui-${modeCookie}`}>
