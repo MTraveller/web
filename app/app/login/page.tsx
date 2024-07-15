@@ -11,7 +11,7 @@ export default function LoginPage() {
       <AuthForm action={login} method='Log in' />
       <Box>
         <Link href='/signup' color='gray' className='hover:!no-underline'>
-          Don't have an account?
+          Don&apos;t have an account?
         </Link>
       </Box>
     </Flex>
