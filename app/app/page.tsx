@@ -1,7 +1,14 @@
-import React from 'react';
+import { redirect } from 'next/navigation';
 
-const App = () => {
-  return <div>App</div>;
-};
+import { createClient } from '@/utils/supabase/server';
 
-export default App;
+export default async function App() {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.auth.getUser();
+  if (error || !data?.user) {
+    redirect('/login');
+  }
+
+  return <p>Hello {data.user.email}</p>;
+}

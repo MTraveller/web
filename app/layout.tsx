@@ -1,25 +1,19 @@
-'use server';
-
 import { Grid, GridItem, HStack, Text } from '@chakra-ui/react';
-import { cookies } from 'next/headers';
 import AppButton from './components/AppButton';
-import ColorModeButton from './components/ColorModeButton';
 import Logo from './components/Logo';
+import MenuDrawer from './components/MenuDrawer';
 import './globals.css';
 import { Chakra } from './providers';
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const modeCookie =
-    (cookies().get('colorMode')?.value as 'dark' | 'light') ?? 'dark';
-
   return (
-    <html lang='en' style={{ colorScheme: modeCookie }} data-theme={modeCookie}>
-      <body className={`chakra-ui-${modeCookie}`}>
-        <Chakra mode={modeCookie}>
+    <html lang='en' style={{ colorScheme: 'dark' }} data-theme={'dark'}>
+      <body className={`chakra-ui-${'dark'}`}>
+        <Chakra>
           <Grid
             templateAreas={`
               "header"
@@ -42,8 +36,8 @@ export default async function RootLayout({
             >
               <Logo />
               <HStack spacing={8}>
-                <ColorModeButton mode={modeCookie} />
                 <AppButton />
+                <MenuDrawer />
               </HStack>
             </GridItem>
             <GridItem

@@ -10,20 +10,18 @@ import {
   Icon,
   Text,
   VStack,
-  useColorMode,
 } from '@chakra-ui/react';
 import { HiOutlineLogout } from 'react-icons/hi';
 import { MdSubdirectoryArrowRight } from 'react-icons/md';
 import useMenuStore from '../../stores/menuStore';
 
 const MobileNav = () => {
-  // const { colorMode } = useColorMode();
   const { setOpen } = useMenuStore();
 
   const handleMenuOpen = () => setOpen(false);
 
   return (
-    <VStack w='full' spacing={6} fontSize='small'>
+    <VStack w='full' spacing={6} fontSize='large'>
       <HStack>
         <Link href='/' onClick={handleMenuOpen}>
           Account
@@ -39,13 +37,10 @@ const MobileNav = () => {
         Contact
       </Link>
       <Box w='full' position='relative' mt={4}>
-        <Divider
-          borderWidth={1.5}
-          // borderColor={colorMode === 'dark' ? 'black' : 'blue.300'}
-        />
+        <Divider borderWidth={1.5} borderColor='black' />
         <AbsoluteCenter
           px={2}
-          // bgColor={colorMode === 'dark' ? 'black' : 'blue.300'}
+          bgColor='black'
           fontStyle='italic'
           fontWeight='light'
           fontSize='xs'

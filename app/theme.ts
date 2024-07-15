@@ -1,5 +1,4 @@
 import { extendTheme, StyleFunctionProps, ThemeConfig } from '@chakra-ui/react';
-import { mode } from '@chakra-ui/theme-tools';
 import { Tomorrow } from 'next/font/google';
 
 const config: ThemeConfig = {

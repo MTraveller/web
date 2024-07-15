@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { type NextRequest, NextResponse } from 'next/server';
+import { updateSession } from '@/utils/supabase/middleware';
 
 export const config = {
   matcher: [
@@ -15,6 +15,8 @@ export const config = {
 };
 
 export default async function middleware(req: NextRequest) {
+  await updateSession(req);
+
   const url = req.nextUrl;
   let hostname = req.headers.get('host')?.replace('.localhost:3000', '');
 
@@ -23,22 +25,13 @@ export default async function middleware(req: NextRequest) {
     searchParams.length > 0 ? `?${searchParams}` : ''
   }`;
 
-  let colorMode = cookies().get('colorMode')?.value;
-  console.log('Existing colorMode cookie:', colorMode);
-
   if (hostname === `app`) {
-    const modeCookie = req.cookies.get('colorMode');
-    console.log('app', modeCookie);
-
     return NextResponse.rewrite(
       new URL(`/app${path === '/' ? '' : path}`, req.url)
     );
   }
 
-  if (hostname === '' || hostname === 'www') {
-    const modeCookie = req.cookies.get('colorMode');
-    console.log('www', modeCookie);
-
+  if (hostname === 'www') {
     return NextResponse.rewrite(
       new URL(`/home${path === '/' ? '' : path}`, req.url)
     );

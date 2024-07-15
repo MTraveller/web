@@ -15,7 +15,7 @@ import { HiOutlineMenuAlt4, HiOutlineX } from 'react-icons/hi';
 import { TbSquareRoundedArrowDown } from 'react-icons/tb';
 import useMenuStore from '../stores/menuStore';
 import Logo from './Logo';
-import MobileNav from './navs/MobileNav';
+import Navigation from './navs/Navigation';
 
 const MenuDrawer = () => {
   const { isOpen, onClose } = useDisclosure();
@@ -95,7 +95,7 @@ const MenuDrawer = () => {
             </Button>
           </ModalHeader>
           <ModalBody ref={menu} display='flex' my={6}>
-            <MobileNav />
+            <Navigation />
             <Icon
               as={TbSquareRoundedArrowDown}
               pos='absolute'
