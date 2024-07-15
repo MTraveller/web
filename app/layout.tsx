@@ -4,6 +4,7 @@ import Logo from './components/Logo';
 import MenuDrawer from './components/MenuDrawer';
 import './globals.css';
 import { Chakra } from './providers';
+import Header from './components/Header';
 
 export default function RootLayout({
   children,
@@ -34,11 +35,7 @@ export default function RootLayout({
               area={'header'}
               px={4}
             >
-              <Logo />
-              <HStack spacing={8}>
-                <AppButton />
-                <MenuDrawer />
-              </HStack>
+              <Header />
             </GridItem>
             <GridItem
               as='main'

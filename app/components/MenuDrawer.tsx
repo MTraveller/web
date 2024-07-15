@@ -14,10 +14,11 @@ import { useEffect, useRef, useState } from 'react';
 import { HiOutlineMenuAlt4, HiOutlineX } from 'react-icons/hi';
 import { TbSquareRoundedArrowDown } from 'react-icons/tb';
 import useMenuStore from '../stores/menuStore';
+import { Domain } from './Header';
 import Logo from './Logo';
 import Navigation from './navs/Navigation';
 
-const MenuDrawer = () => {
+const MenuDrawer = ({ domain }: Domain) => {
   const { isOpen, onClose } = useDisclosure();
   const { menuIsOpen, setOpen } = useMenuStore();
 
@@ -83,7 +84,7 @@ const MenuDrawer = () => {
             px={4}
             py={0}
           >
-            <Logo />
+            <Logo domain={domain} />
             <Button
               w='60px'
               h='50px'
