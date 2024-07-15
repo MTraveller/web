@@ -18,7 +18,11 @@ export default async function middleware(req: NextRequest) {
   await updateSession(req);
 
   const url = req.nextUrl;
-  let hostname = req.headers.get('host')?.replace('.localhost:3000', '');
+
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  let hostname = req.headers
+    .get('host')
+    ?.replace(isDevelopment ? '.localhost:3000' : '.ecominmotion.com', '');
 
   const searchParams = req.nextUrl.searchParams.toString();
   const path = `${url.pathname}${
