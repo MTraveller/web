@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const token_hash = searchParams.get('token_hash');
   const type = searchParams.get('type') as EmailOtpType | null;
-  const next = searchParams.get('next') ?? '/';
+  // const next = searchParams.get('next') ?? '/';
 
   if (token_hash && type) {
     const supabase = createClient();
@@ -17,12 +17,16 @@ export async function GET(request: NextRequest) {
       type,
       token_hash,
     });
+
     if (!error) {
       // redirect user to specified redirect URL or root of app
-      redirect(next);
+      return redirect('/welcome');
+    } else {
+      // redirect user if there's an error
+      return redirect(`./auth/error?e=${error?.code}`);
     }
   }
 
   // redirect the user to an error page with some instructions
-  redirect('/error');
+  return redirect('/login');
 }

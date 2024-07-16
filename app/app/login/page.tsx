@@ -1,18 +1,16 @@
-'use client';
-
-import { Box, Flex } from '@chakra-ui/react';
-import AuthForm from '../form/AuthForm';
+import { Box, Flex, Text } from '@chakra-ui/react';
+import AuthForm from '../auth/form/AuthForm';
 import { login } from './actions';
-import { Link } from '@chakra-ui/next-js';
 
 export default function LoginPage() {
   return (
     <Flex flex='1' direction='column' alignItems='center' gap={6}>
-      <AuthForm action={login} method='Log in' />
+      <AuthForm action={login} />
       <Box>
-        <Link href='/signup' color='gray' className='hover:!no-underline'>
-          Don&apos;t have an account?
-        </Link>
+        <Text fontSize='sm' color='gray'>
+          Don't have an account?
+          <br /> No worries, an account will automatically be created for you.
+        </Text>
       </Box>
     </Flex>
   );

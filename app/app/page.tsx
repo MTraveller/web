@@ -1,14 +1,10 @@
 import { redirect } from 'next/navigation';
 
 import { createClient } from '@/utils/supabase/server';
+import getSupaUser from '@/utils/supabase/getUser';
 
 export default async function App() {
-  const supabase = createClient();
-
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
-    redirect('/login');
-  }
+  const { data } = await getSupaUser();
 
   return <p>Hello {data.user.email}</p>;
 }

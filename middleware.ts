@@ -1,5 +1,5 @@
-import { type NextRequest, NextResponse } from 'next/server';
 import { updateSession } from '@/utils/supabase/middleware';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const config = {
   matcher: [
@@ -35,7 +35,7 @@ export default async function middleware(req: NextRequest) {
     );
   }
 
-  if (hostname === 'www') {
+  if (hostname === `www`) {
     return NextResponse.rewrite(
       new URL(`/home${path === '/' ? '' : path}`, req.url)
     );

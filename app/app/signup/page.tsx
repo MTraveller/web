@@ -2,7 +2,7 @@
 
 import { Flex, Box } from '@chakra-ui/react';
 import { Link } from '@chakra-ui/next-js';
-import AuthForm from '../form/AuthForm';
+import AuthForm from '../../auth/form/AuthForm';
 import { signup } from './actions';
 
 export default function LoginPage() {

@@ -3,24 +3,29 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
+import getDomain from '@/utils/getDomain';
 import { createClient } from '@/utils/supabase/server';
 
 export async function login(formData: FormData) {
   const supabase = createClient();
+  const { domain } = getDomain();
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
-  const data = {
+  const { data, error } = await supabase.auth.signInWithOtp({
     email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  };
+    options: {
+      // set this to false if you do not want the user to be automatically signed up
+      shouldCreateUser: true,
+      emailRedirectTo: domain + '/welcome',
+    },
+  });
 
-  const { error } = await supabase.auth.signInWithPassword(data);
-
-  if (error) {
-    redirect('/error');
+  if (error?.code) {
+    console.log(error);
+    return redirect(`./auth/error?e=${error.code}`);
   }
 
-  revalidatePath('/', 'layout');
-  redirect('/');
+  revalidatePath('./auth/verify', 'layout');
+  return redirect('./auth/verify');
 }

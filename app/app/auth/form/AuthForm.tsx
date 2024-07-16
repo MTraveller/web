@@ -1,12 +1,21 @@
-import { Box, Button, Container, Heading, Stack } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Center,
+  Container,
+  Divider,
+  Heading,
+  HStack,
+  Spacer,
+  Stack,
+} from '@chakra-ui/react';
 import BeatLoader from 'react-spinners/BeatLoader';
 
 interface AuthForm {
   action: (formData: FormData) => Promise<void>;
-  method: string;
 }
 
-const AuthForm = ({ action, method }: AuthForm) => {
+const AuthForm = ({ action }: AuthForm) => {
   return (
     <form className='w-full' action={action}>
       <Container
@@ -21,13 +30,15 @@ const AuthForm = ({ action, method }: AuthForm) => {
         p={6}
       >
         <Heading as='h1' size='lg'>
-          {method === 'Log in'
-            ? 'Log in to your account'
-            : 'Sign up for an account'}
+          Log in to your account
         </Heading>
         <Heading as='h2' size='sm'>
-          Choose your preferred method
+          Continue with your preferred method
         </Heading>
+        <HStack></HStack>
+        <Center height={4}>
+          <Divider />
+        </Center>
         <Stack direction={['column']} textAlign='left' gap={3}>
           <label htmlFor='email' hidden>
             Email:
@@ -40,17 +51,6 @@ const AuthForm = ({ action, method }: AuthForm) => {
             className='px-6 py-3'
             required
           />
-          <label htmlFor='password' hidden>
-            Password:
-          </label>
-          <input
-            id='password'
-            name='password'
-            type='password'
-            placeholder='Password..'
-            className='px-6 py-3'
-            required
-          />
         </Stack>
         <Box>
           <Button
@@ -60,7 +60,7 @@ const AuthForm = ({ action, method }: AuthForm) => {
             className='w-full'
             type='submit'
           >
-            {method}
+            Continue with email
           </Button>
         </Box>
       </Container>
