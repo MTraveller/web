@@ -8,7 +8,9 @@ import { createClient } from '@/utils/supabase/server';
 
 export async function login(formData: FormData) {
   const supabase = createClient();
-  const { domain } = getDomain();
+  const {
+    domain: { app },
+  } = getDomain();
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
@@ -17,12 +19,11 @@ export async function login(formData: FormData) {
     options: {
       // set this to false if you do not want the user to be automatically signed up
       shouldCreateUser: true,
-      emailRedirectTo: domain + '/welcome',
+      emailRedirectTo: app + '/welcome',
     },
   });
 
   if (error?.code) {
-    console.log(error);
     return redirect(`./auth/error?e=${error.code}`);
   }
 

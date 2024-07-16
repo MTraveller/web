@@ -14,11 +14,18 @@ import { useEffect, useRef, useState } from 'react';
 import { HiOutlineMenuAlt4, HiOutlineX } from 'react-icons/hi';
 import { TbSquareRoundedArrowDown } from 'react-icons/tb';
 import useMenuStore from '../stores/menuStore';
-import { Domain } from './Header';
+import { Domain, UserExtended } from './Header';
 import Logo from './Logo';
 import Navigation from './navs/Navigation';
+import { User } from '@supabase/supabase-js';
 
-const MenuDrawer = ({ domain }: Domain) => {
+const MenuDrawer = ({
+  domain,
+  user,
+}: {
+  domain: Domain;
+  user: User | 'unauthenticated' | undefined;
+}) => {
   const { isOpen, onClose } = useDisclosure();
   const { menuIsOpen, setOpen } = useMenuStore();
 
@@ -84,7 +91,7 @@ const MenuDrawer = ({ domain }: Domain) => {
             px={4}
             py={0}
           >
-            <Logo domain={domain} />
+            <Logo domain={domain} user={user} />
             <Button
               w='60px'
               h='50px'
@@ -96,7 +103,7 @@ const MenuDrawer = ({ domain }: Domain) => {
             </Button>
           </ModalHeader>
           <ModalBody ref={menu} display='flex' my={6}>
-            <Navigation />
+            <Navigation user={user} />
             <Icon
               as={TbSquareRoundedArrowDown}
               pos='absolute'

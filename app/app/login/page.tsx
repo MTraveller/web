@@ -1,8 +1,13 @@
+import fetchSupaUser from '@/services/user-client';
 import { Box, Flex, Text } from '@chakra-ui/react';
+import { redirect } from 'next/navigation';
 import AuthForm from '../auth/form/AuthForm';
 import { login } from './actions';
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const user = await fetchSupaUser().then((r) => r?.user);
+  if (user) redirect('../welcome');
+
   return (
     <Flex flex='1' direction='column' alignItems='center' gap={6}>
       <AuthForm action={login} />

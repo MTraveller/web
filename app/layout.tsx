@@ -1,10 +1,8 @@
-import { Grid, GridItem, HStack, Text } from '@chakra-ui/react';
-import AppButton from './components/AppButton';
-import Logo from './components/Logo';
-import MenuDrawer from './components/MenuDrawer';
+import { Grid, GridItem, Text } from '@chakra-ui/react';
+import Header from './components/Header';
 import './globals.css';
 import { Chakra } from './providers';
-import Header from './components/Header';
+import AuthenticatedGrids from './components/AuthenticatedGrids';
 
 export default function RootLayout({
   children,
@@ -27,25 +25,7 @@ export default function RootLayout({
             minH='100dvh'
             w='100vw'
           >
-            <GridItem
-              as='header'
-              display='flex'
-              justifyContent='space-between'
-              alignItems='center'
-              area={'header'}
-              px={4}
-            >
-              <Header />
-            </GridItem>
-            <GridItem
-              as='main'
-              display='flex'
-              area={'main'}
-              p={4}
-              justifyContent='center'
-            >
-              {children}
-            </GridItem>
+            <AuthenticatedGrids>{children}</AuthenticatedGrids>
             <GridItem
               as='footer'
               display='flex'

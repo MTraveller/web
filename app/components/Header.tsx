@@ -1,22 +1,25 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import Logo from './Logo';
 import { HStack } from '@chakra-ui/react';
+import { User } from '@supabase/supabase-js';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import AppButton from './AppButton';
+import Logo from './Logo';
 import MenuDrawer from './MenuDrawer';
 
 export interface Domain {
-  domain: {
-    env: string;
-    hostname: string;
-    subdomain: string;
-    path: string;
-  };
+  env: string;
+  hostname: string;
+  subdomain: string;
+  path: string;
 }
 
-const Header = () => {
+export interface UserExtended extends User {
+  user: { role: string } | 'unauthenticated' | undefined;
+}
+
+const Header = ({ user }: { user: User | 'unauthenticated' | undefined }) => {
   const env = process.env.NODE_ENV as 'development' | 'production';
   const [subdomain, setSubdomain] = useState<string>('');
   const path = usePathname();
@@ -45,10 +48,12 @@ const Header = () => {
 
   return (
     <>
-      <Logo domain={domainDetails} />
+      <Logo domain={domainDetails} user={user} />
       <HStack spacing={8}>
-        <AppButton domain={domainDetails} />
-        <MenuDrawer domain={domainDetails} />
+        {(user || user === 'unauthenticated') && (
+          <AppButton domain={domainDetails} user={user} />
+        )}
+        <MenuDrawer domain={domainDetails} user={user} />
       </HStack>
     </>
   );

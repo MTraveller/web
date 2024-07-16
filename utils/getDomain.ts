@@ -1,8 +1,14 @@
 const env = process.env.NODE_ENV as 'development' | 'production';
 
 const domain = {
-  development: 'http://app.localhost:3000',
-  production: 'https://app.ecominmotion.com',
+  development: {
+    app: 'http://app.localhost:3000',
+    www: 'http://www.localhost:3000',
+  },
+  production: {
+    app: 'https://app.ecominmotion.com',
+    www: 'https://www.ecominmotion.com',
+  },
 };
 
 export function getDomain() {

@@ -2,11 +2,16 @@
 
 import { Link } from '@chakra-ui/next-js';
 import { HStack, Heading } from '@chakra-ui/react';
+import { User } from '@supabase/supabase-js';
 import Image from 'next/image';
-import { Domain } from './Header';
 
-const Logo = ({ domain }: Domain) => {
-  const { env, hostname } = domain;
+const Logo = ({
+  domain: { env, hostname },
+  user,
+}: {
+  domain: { env: string; hostname: string };
+  user: User | 'unauthenticated' | undefined;
+}) => {
   return (
     <HStack>
       <Image src='/vercel.svg' alt='eCom in Motion' width={32} height={32} />
