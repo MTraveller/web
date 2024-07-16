@@ -1,10 +1,12 @@
-'use client';
-
-import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
+import Error from './Error';
 
 function ErrorPage() {
-  const error = useSearchParams().get('e');
-  return <div>{error}</div>;
+  return (
+    <Suspense>
+      <Error />
+    </Suspense>
+  );
 }
 
 export default ErrorPage;
