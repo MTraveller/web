@@ -1,10 +1,9 @@
 'use client';
 
 import { VStack } from '@chakra-ui/react';
+import { User } from '@supabase/supabase-js';
 import Authenticated from '../drawer/Authenticated';
 import UnAuthenticated from '../drawer/UnAuthenticated';
-import { UserExtended } from '../Header';
-import { User } from '@supabase/supabase-js';
 
 const Navigation = ({
   user,

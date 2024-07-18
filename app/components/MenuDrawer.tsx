@@ -10,14 +10,14 @@ import {
   ModalOverlay,
   useDisclosure,
 } from '@chakra-ui/react';
+import { User } from '@supabase/supabase-js';
 import { useEffect, useRef, useState } from 'react';
 import { HiOutlineMenuAlt4, HiOutlineX } from 'react-icons/hi';
 import { TbSquareRoundedArrowDown } from 'react-icons/tb';
 import useMenuStore from '../stores/menuStore';
-import { Domain, UserExtended } from './Header';
+import { Domain } from './Header';
 import Logo from './Logo';
 import Navigation from './navs/Navigation';
-import { User } from '@supabase/supabase-js';
 
 const MenuDrawer = ({
   domain,

@@ -1,10 +1,10 @@
 'use client';
 
+import fetchSupaUser from '@/services/user-client';
 import { GridItem } from '@chakra-ui/react';
+import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 import Header from './Header';
-import fetchSupaUser from '@/services/user-client';
-import { User } from '@supabase/supabase-js';
 
 const AuthenticatedGrids = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | 'unauthenticated' | undefined>(

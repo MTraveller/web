@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Box,
   Button,
@@ -6,18 +8,47 @@ import {
   Divider,
   Heading,
   HStack,
-  Spacer,
   Stack,
 } from '@chakra-ui/react';
+import { useRef, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import BeatLoader from 'react-spinners/BeatLoader';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+
+const schema = z.object({
+  email: z.string().email(),
+});
 
 interface AuthForm {
   action: (formData: FormData) => Promise<void>;
 }
 
+type Inputs = {
+  email: string;
+};
+
 const AuthForm = ({ action }: AuthForm) => {
+  const [isLoading, setLoading] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>({ resolver: zodResolver(schema) });
+
+  const onSubmit: SubmitHandler<Inputs> = () => {
+    setLoading(true);
+    formRef.current?.submit();
+  };
+
   return (
-    <form className='w-full' action={action}>
+    <form
+      className='w-full'
+      action={action}
+      onSubmit={handleSubmit(onSubmit)}
+      ref={formRef}
+    >
       <Container
         display='flex'
         flexDirection='column'
@@ -45,20 +76,25 @@ const AuthForm = ({ action }: AuthForm) => {
           </label>
           <input
             id='email'
-            name='email'
             type='email'
             placeholder='Email..'
             className='px-6 py-3'
-            required
+            {...register('email', { required: true })}
           />
+          {errors.email && (
+            <span className='text-pink-600'>
+              A valid <b>email address</b> is required
+            </span>
+          )}
         </Stack>
         <Box>
           <Button
-            isLoading={false}
+            type='submit'
+            className='w-full'
             colorScheme='green'
             spinner={<BeatLoader size={8} color='white' />}
-            className='w-full'
-            type='submit'
+            isLoading={isLoading}
+            disabled={isLoading}
           >
             Continue with email
           </Button>
