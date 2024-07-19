@@ -16,11 +16,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: ./
       - name: Use Bun
-        uses: oven-sh/setup-bun@v2
+        uses: ./
         with:
-          bun-version: latest
+          bun-version: oven-sh/setup-bun@v2
 
       - name: Install dependencies
         run: |
