@@ -3,7 +3,7 @@
 import fetchSupaUser from '@/services/user-client';
 import { GridItem } from '@chakra-ui/react';
 import { User } from '@supabase/supabase-js';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Header from './Header';
 
 const AuthenticatedGrids = ({ children }: { children: React.ReactNode }) => {
@@ -11,16 +11,21 @@ const AuthenticatedGrids = ({ children }: { children: React.ReactNode }) => {
     undefined
   );
 
-  useEffect(() => {
-    if (!user)
-      fetchSupaUser().then((r) => {
+  const fetchUser = useCallback(
+    async () =>
+      await fetchSupaUser().then((r) => {
         console.log('Authenticated: ', r);
         if (!r) {
           setUser('unauthenticated');
         } else if (r) {
           setUser(r?.user);
         }
-      });
+      }),
+    []
+  );
+
+  useEffect(() => {
+    if (!user) fetchUser();
   }, [user]);
 
   return (
@@ -36,11 +41,14 @@ const AuthenticatedGrids = ({ children }: { children: React.ReactNode }) => {
         <Header user={user} />
       </GridItem>
       <GridItem
+        width='full'
         as='main'
-        display='flex'
         area={'main'}
-        p={4}
+        display='flex'
         justifyContent='center'
+        pt={24}
+        px={[0, 1, 2, 4]}
+        pb={4}
       >
         {children}
       </GridItem>

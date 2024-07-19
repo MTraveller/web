@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import BeatLoader from 'react-spinners/BeatLoader';
+import { BeatLoader } from 'react-spinners';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
