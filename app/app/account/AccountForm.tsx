@@ -76,7 +76,7 @@ export default function AccountForm({ user }: { user: User | null }) {
     } finally {
       setLoading(false);
     }
-  }, [user, supabase]);
+  }, [user, supabase, setValue, toast]);
 
   useEffect(() => {
     getProfile();

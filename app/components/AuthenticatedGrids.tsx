@@ -26,7 +26,7 @@ const AuthenticatedGrids = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (!user) fetchUser();
-  }, [user]);
+  }, [user, fetchUser]);
 
   return (
     <>
