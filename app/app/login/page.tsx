@@ -1,11 +1,11 @@
-import fetchSupaUser from '@/services/user-client';
+import { fetchSupaUserWOR } from '@/services/user-client';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { redirect } from 'next/navigation';
 import AuthForm from '../auth/form/AuthForm';
 import { login } from './actions';
 
 export default async function LoginPage() {
-  const user = await fetchSupaUser().then((r) => r?.user);
+  const user = await fetchSupaUserWOR().then((r) => r?.user);
   if (user) redirect('../welcome');
 
   return (

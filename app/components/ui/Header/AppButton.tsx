@@ -2,10 +2,11 @@
 
 import { Link } from '@chakra-ui/next-js';
 import { Button } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { logout } from '../app/auth/logout/actions';
-import { Domain, UserExtended } from './Header';
 import { User } from '@supabase/supabase-js';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { logout } from '../../../app/auth/logout/actions';
+import { Domain } from './Header';
 
 const AppButton = ({
   domain: { env, hostname, subdomain, path },
@@ -15,6 +16,7 @@ const AppButton = ({
   user: User | 'unauthenticated' | undefined;
 }) => {
   const [isUser, setIsUser] = useState<boolean>(false);
+  const trail = usePathname();
 
   useEffect(() => {
     if (user && user !== 'unauthenticated') {
@@ -24,11 +26,20 @@ const AppButton = ({
     }
   }, [user]);
 
-  console.log('isUser', isUser);
   return isUser ? (
-    <form action={logout}>
-      <Button type='submit'>Log out</Button>
-    </form>
+    trail === '/account' ? (
+      <form action={logout}>
+        <Button type='submit' _hover={{ textDecoration: 'none' }}>
+          Log out
+        </Button>
+      </form>
+    ) : (
+      <Button>
+        <Link href='/account' _hover={{ textDecoration: 'none' }}>
+          Account
+        </Link>
+      </Button>
+    )
   ) : (
     <Button>
       <Link

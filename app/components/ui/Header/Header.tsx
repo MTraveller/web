@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import AppButton from './AppButton';
 import Logo from './Logo';
-import MenuDrawer from './MenuDrawer';
+import MenuDrawer from '../Navbar/MenuDrawer';
 
 export interface Domain {
   env: string;

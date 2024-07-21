@@ -2,8 +2,8 @@
 
 import { VStack } from '@chakra-ui/react';
 import { User } from '@supabase/supabase-js';
-import Authenticated from '../drawer/Authenticated';
-import UnAuthenticated from '../drawer/UnAuthenticated';
+import AuthNav from './AuthNav';
+import UnAuthNav from './UnAuthNav';
 
 const Navigation = ({
   user,
@@ -12,11 +12,7 @@ const Navigation = ({
 }) => {
   return (
     <VStack w='full' spacing={6} fontSize='large'>
-      {user && user !== 'unauthenticated' ? (
-        <Authenticated />
-      ) : (
-        <UnAuthenticated />
-      )}
+      {user && user !== 'unauthenticated' ? <AuthNav /> : <UnAuthNav />}
     </VStack>
   );
 };

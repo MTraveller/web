@@ -1,14 +1,16 @@
+import { fetchSupaUserWOR } from '@/services/user-client';
 import { Grid, GridItem, Text } from '@chakra-ui/react';
-import Header from './components/Header';
+import AuthenticatedGrids from './components/AuthenticatedGrids';
 import './globals.css';
 import { Chakra } from './providers';
-import AuthenticatedGrids from './components/AuthenticatedGrids';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const user = await fetchSupaUserWOR().then((r) => r?.user);
+
   return (
     <html lang='en' style={{ colorScheme: 'dark' }} data-theme={'dark'}>
       <body className={`chakra-ui-${'dark'}`}>
@@ -25,7 +27,7 @@ export default function RootLayout({
             minH='100dvh'
             w='100vw'
           >
-            <AuthenticatedGrids>{children}</AuthenticatedGrids>
+            <AuthenticatedGrids user={user}>{children}</AuthenticatedGrids>
             <GridItem
               as='footer'
               display='flex'

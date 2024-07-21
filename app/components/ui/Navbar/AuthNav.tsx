@@ -2,12 +2,21 @@
 
 import getDomain from '@/utils/getDomain';
 import { Link } from '@chakra-ui/next-js';
-import { AbsoluteCenter, Box, Divider, HStack, VStack } from '@chakra-ui/react';
-import useMenuStore from '../../stores/menuStore';
+import {
+  AbsoluteCenter,
+  Box,
+  Divider,
+  HStack,
+  Icon,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
+import { MdSubdirectoryArrowRight } from 'react-icons/md';
+import useMenuStore from '@/app/stores/menuStore';
 
-const UnAuthenticated = () => {
+const AuthNav = () => {
   const {
-    domain: { www },
+    domain: { www, app },
   } = getDomain();
   const { setOpen } = useMenuStore();
   const handleMenuOpen = () => setOpen(false);
@@ -18,9 +27,15 @@ const UnAuthenticated = () => {
         <Link
           width='80px'
           textAlign='end'
-          href={`${www}/#about`}
+          href={`/account`}
           onClick={handleMenuOpen}
         >
+          Account
+        </Link>
+        <Box height='full' mx={4}>
+          <Divider orientation='vertical' borderWidth={1.5} />
+        </Box>
+        <Link href={`${www}/#about`} onClick={handleMenuOpen}>
           About
         </Link>
         <Box height='full' mx={4}>
@@ -33,7 +48,7 @@ const UnAuthenticated = () => {
       <Box w='full' position='relative' mt={4} mb={2}>
         <Divider borderWidth={1.5} borderColor='black' />
         <AbsoluteCenter
-          px={3}
+          px={2}
           bgColor='black'
           fontStyle='italic'
           fontWeight='light'
@@ -42,16 +57,22 @@ const UnAuthenticated = () => {
           Tools
         </AbsoluteCenter>
       </Box>
+      <Link href='/niches' onClick={handleMenuOpen}>
+        Niche Ideas
+      </Link>
       <VStack>
-        <Link href={`${www}/#niches`} onClick={handleMenuOpen}>
-          Niche Ideas
-        </Link>
-        <Link href={`${www}/#gsap`} onClick={handleMenuOpen}>
+        <Link href='/gsap' onClick={handleMenuOpen}>
           Average Price
+        </Link>
+        <Link href='/gsap/previous' onClick={handleMenuOpen}>
+          <Text fontSize='xs'>
+            <Icon ml={6} as={MdSubdirectoryArrowRight} />
+            Previous
+          </Text>
         </Link>
       </VStack>
     </>
   );
 };
 
-export default UnAuthenticated;
+export default AuthNav;

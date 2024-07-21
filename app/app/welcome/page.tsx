@@ -1,7 +1,5 @@
 import React from 'react';
 
-function WelcomePage() {
+export default function WelcomePage() {
   return <div>WelcomePage</div>;
 }
-
-export default WelcomePage;

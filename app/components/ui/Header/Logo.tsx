@@ -4,7 +4,7 @@ import { Link } from '@chakra-ui/next-js';
 import { HStack, Heading } from '@chakra-ui/react';
 import { User } from '@supabase/supabase-js';
 import Image from 'next/image';
-import useMenuStore from '../stores/menuStore';
+import useMenuStore from '../../../stores/menuStore';
 
 const Logo = ({
   domain: { env, hostname },

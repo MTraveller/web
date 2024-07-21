@@ -1,4 +1,10 @@
-import { getSupaUserWithoutRedirect } from '@/utils/supabase/getUser';
+'use server';
+
+import { createClient } from '@/utils/supabase/server';
+import {
+  getSupaUserWithoutRedirect,
+  getSupaUserWithRedirect,
+} from '@/utils/supabase/queries';
 import { User } from '@supabase/supabase-js';
 
 interface SupaUser {
@@ -7,13 +13,30 @@ interface SupaUser {
   };
 }
 
-const fetchSupaUser = async () => {
+export const fetchSupaUserWOR = async () => {
+  const supabase = createClient();
+
   const {
     data: { user },
-  }: SupaUser = await getSupaUserWithoutRedirect().then((r) => JSON.parse(r));
+  }: SupaUser = await getSupaUserWithoutRedirect(supabase).then((r) =>
+    JSON.parse(r)
+  );
 
+  console.log('user-client: ', user);
   if (!user) return null;
   return { user };
 };
 
-export default fetchSupaUser;
+export const fetchSupaUserWR = async () => {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  }: SupaUser = await getSupaUserWithRedirect(supabase).then((r) =>
+    JSON.parse(r)
+  );
+
+  console.log('user-client: ', user);
+  if (!user) return null;
+  return { user };
+};

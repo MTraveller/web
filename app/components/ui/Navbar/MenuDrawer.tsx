@@ -1,7 +1,9 @@
 'use client';
 
 import {
+  Box,
   Button,
+  Flex,
   Icon,
   Modal,
   ModalBody,
@@ -14,10 +16,11 @@ import { User } from '@supabase/supabase-js';
 import { useEffect, useRef, useState } from 'react';
 import { HiOutlineMenuAlt4, HiOutlineX } from 'react-icons/hi';
 import { TbSquareRoundedArrowDown } from 'react-icons/tb';
-import useMenuStore from '../stores/menuStore';
-import { Domain } from './Header';
-import Logo from './Logo';
-import Navigation from './navs/Navigation';
+import useMenuStore from '../../../stores/menuStore';
+import { Domain } from '../Header/Header';
+import Logo from '../Header/Logo';
+import Navigation from './Navigation';
+import { logout } from '@/app/app/auth/logout/actions';
 
 const MenuDrawer = ({
   domain,
@@ -92,15 +95,24 @@ const MenuDrawer = ({
             py={0}
           >
             <Logo domain={domain} user={user} />
-            <Button
-              w='60px'
-              h='50px'
-              border='1px'
-              bgColor='transparent'
-              onClick={() => setOpen(false)}
-            >
-              <Icon as={HiOutlineX} fontSize='lg' />
-            </Button>
+            <Flex flexDirection='row' gap={8} alignItems='center'>
+              {user && user !== 'unauthenticated' && (
+                <form action={logout}>
+                  <Button type='submit' _hover={{ textDecoration: 'none' }}>
+                    Log out
+                  </Button>
+                </form>
+              )}
+              <Button
+                w='60px'
+                h='50px'
+                border='1px'
+                bgColor='transparent'
+                onClick={() => setOpen(false)}
+              >
+                <Icon as={HiOutlineX} fontSize='lg' />
+              </Button>
+            </Flex>
           </ModalHeader>
           <ModalBody ref={menu} display='flex' my={6}>
             <Navigation user={user} />

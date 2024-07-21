@@ -2,21 +2,12 @@
 
 import getDomain from '@/utils/getDomain';
 import { Link } from '@chakra-ui/next-js';
-import {
-  AbsoluteCenter,
-  Box,
-  Divider,
-  HStack,
-  Icon,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
-import { MdSubdirectoryArrowRight } from 'react-icons/md';
-import useMenuStore from '../../stores/menuStore';
+import { AbsoluteCenter, Box, Divider, HStack, VStack } from '@chakra-ui/react';
+import useMenuStore from '@/app/stores/menuStore';
 
-const Authenticated = () => {
+const UnAuthNav = () => {
   const {
-    domain: { www, app },
+    domain: { www },
   } = getDomain();
   const { setOpen } = useMenuStore();
   const handleMenuOpen = () => setOpen(false);
@@ -42,7 +33,7 @@ const Authenticated = () => {
       <Box w='full' position='relative' mt={4} mb={2}>
         <Divider borderWidth={1.5} borderColor='black' />
         <AbsoluteCenter
-          px={2}
+          px={3}
           bgColor='black'
           fontStyle='italic'
           fontWeight='light'
@@ -51,22 +42,16 @@ const Authenticated = () => {
           Tools
         </AbsoluteCenter>
       </Box>
-      <Link href='/niches' onClick={handleMenuOpen}>
-        Niche Ideas
-      </Link>
       <VStack>
-        <Link href='/gsap' onClick={handleMenuOpen}>
-          Average Price
+        <Link href={`${www}/#niches`} onClick={handleMenuOpen}>
+          Niche Ideas
         </Link>
-        <Link href='/gsap/previous' onClick={handleMenuOpen}>
-          <Text fontSize='xs'>
-            <Icon ml={6} as={MdSubdirectoryArrowRight} />
-            Previous
-          </Text>
+        <Link href={`${www}/#gsap`} onClick={handleMenuOpen}>
+          Average Price
         </Link>
       </VStack>
     </>
   );
 };
 
-export default Authenticated;
+export default UnAuthNav;
