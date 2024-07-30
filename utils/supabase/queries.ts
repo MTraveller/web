@@ -6,6 +6,7 @@ export const getUser = cache(async (supabase: SupabaseClient) => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
   return user;
 });
 
@@ -17,7 +18,7 @@ export const getSupaUserWithRedirect = cache(
       redirect('/login');
     }
 
-    return JSON.stringify({ supabase, data, error });
+    return { supabase, data, error };
   }
 );
 
@@ -25,7 +26,7 @@ export const getSupaUserWithoutRedirect = cache(
   async (supabase: SupabaseClient) => {
     const { data, error } = await supabase.auth.getUser();
 
-    return JSON.stringify({ supabase, data, error });
+    return { supabase, data, error };
   }
 );
 

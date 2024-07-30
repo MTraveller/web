@@ -1,11 +1,15 @@
-import { fetchSupaUserWOR } from '@/services/user-client';
+import { getSupaUserWithoutRedirect } from '@/utils/supabase/queries';
+import { createClient } from '@/utils/supabase/server';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { redirect } from 'next/navigation';
 import AuthForm from '../auth/form/AuthForm';
 import { login } from './actions';
 
 export default async function LoginPage() {
-  const user = await fetchSupaUserWOR().then((r) => r?.user);
+  const supabase = createClient();
+  const user = await getSupaUserWithoutRedirect(supabase).then(
+    (r) => r?.data.user
+  );
   if (user) redirect('../welcome');
 
   return (

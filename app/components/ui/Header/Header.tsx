@@ -1,12 +1,14 @@
 'use client';
 
-import { HStack } from '@chakra-ui/react';
+import { Button, HStack } from '@chakra-ui/react';
 import { User } from '@supabase/supabase-js';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import AppButton from './AppButton';
 import Logo from './Logo';
 import MenuDrawer from '../Navbar/MenuDrawer';
+import { BeatLoader } from 'react-spinners';
+import { Link } from '@chakra-ui/next-js';
 
 export interface Domain {
   env: string;
@@ -16,10 +18,10 @@ export interface Domain {
 }
 
 export interface UserExtended extends User {
-  user: { role: string } | 'unauthenticated' | undefined;
+  user: { role: string } | string | undefined;
 }
 
-const Header = ({ user }: { user: User | 'unauthenticated' | undefined }) => {
+const Header = ({ user }: { user: User | string | null }) => {
   const env = process.env.NODE_ENV as 'development' | 'production';
   const [subdomain, setSubdomain] = useState<string>('');
   const path = usePathname();
@@ -48,10 +50,21 @@ const Header = ({ user }: { user: User | 'unauthenticated' | undefined }) => {
 
   return (
     <>
-      <Logo domain={domainDetails} user={user} />
+      <Logo domain={domainDetails} />
       <HStack spacing={8}>
-        {(user || user === 'unauthenticated') && (
-          <AppButton domain={domainDetails} user={user} />
+        {(user && <AppButton path={domainDetails.path} />) ?? (
+          <Button>
+            <Link
+              href={
+                (domainDetails.env === 'dev' ? 'http' : 'https') +
+                `://app.${domainDetails.hostname}/login`
+              }
+              _hover={{ textDecoration: 'none' }}
+              target='_self'
+            >
+              Log in
+            </Link>
+          </Button>
         )}
         <MenuDrawer domain={domainDetails} user={user} />
       </HStack>

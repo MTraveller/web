@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import Image from 'next/image';
+import { useToast } from '@chakra-ui/react';
 
 export default function Avatar({
   uid,
@@ -16,6 +17,8 @@ export default function Avatar({
   onUpload: (url: string) => void;
 }) {
   const supabase = createClient();
+  const toast = useToast();
+
   const [avatarUrl, setAvatarUrl] = useState<string | null>(url);
   const [uploading, setUploading] = useState(false);
 
@@ -32,12 +35,19 @@ export default function Avatar({
         const url = URL.createObjectURL(data);
         setAvatarUrl(url);
       } catch (error) {
-        console.log('Error downloading image: ', error);
+        toast({
+          title: 'Error downloading image!',
+          description: `Error: ${error}`,
+          status: 'error',
+          position: 'bottom-right',
+          duration: 9000,
+          isClosable: true,
+        });
       }
     }
 
     if (url) downloadImage(url);
-  }, [url, supabase]);
+  }, [url, supabase, toast]);
 
   const uploadAvatar: React.ChangeEventHandler<HTMLInputElement> = async (
     event

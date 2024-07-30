@@ -8,10 +8,10 @@ import useMenuStore from '../../../stores/menuStore';
 
 const Logo = ({
   domain: { env, hostname },
-  user,
-}: {
+}: // user,
+{
   domain: { env: string; hostname: string };
-  user: User | 'unauthenticated' | undefined;
+  // user: User | string | undefined;
 }) => {
   const { menuIsOpen, setOpen } = useMenuStore();
   const handleMenuOpen = () => menuIsOpen && setOpen(false);

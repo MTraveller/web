@@ -1,8 +1,13 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
+import getDomain from '../getDomain';
 
 export function createClient() {
   const cookieStore = cookies();
+
+  const {
+    domain: { hostname },
+  } = getDomain();
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

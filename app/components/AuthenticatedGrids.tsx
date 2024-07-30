@@ -1,38 +1,27 @@
 'use client';
 
-import { fetchSupaUserWOR } from '@/services/user-client';
+import { createClient } from '@/utils/supabase/client';
+import { getUser } from '@/utils/supabase/queries';
 import { GridItem } from '@chakra-ui/react';
 import { User } from '@supabase/supabase-js';
 import { useCallback, useEffect, useState } from 'react';
 import Header from './ui/Header/Header';
 
-const AuthenticatedGrids = ({
-  user,
-  children,
-}: {
-  user: User | 'unauthenticated' | undefined;
-  children: React.ReactNode;
-}) => {
-  // const [user, setUser] = useState<User | 'unauthenticated' | undefined>(
-  //   undefined
-  // );
+const AuthenticatedGrids = ({ children }: { children: React.ReactNode }) => {
+  const supabase = createClient();
+  const fetchUser = useCallback(
+    async () =>
+      await getUser(supabase).then((r) => {
+        if (r) setUser(r);
+      }),
+    [supabase]
+  );
 
-  // const fetchUser = useCallback(
-  //   async () =>
-  //     await fetchSupaUserWOR().then((r) => {
-  //       console.log('Authenticated: ', r?.user);
-  //       if (!r) {
-  //         setUser('unauthenticated');
-  //       } else if (r) {
-  //         setUser(r?.user);
-  //       }
-  //     }),
-  //   []
-  // );
+  const [user, setUser] = useState<User | null>(null);
 
-  // useEffect(() => {
-  //   if (!user) fetchUser();
-  // }, [user, fetchUser]);
+  useEffect(() => {
+    if (!user) fetchUser();
+  }, [user, fetchUser]);
 
   return (
     <>

@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { User } from '@supabase/supabase-js';
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { HiOutlineMenuAlt4, HiOutlineX } from 'react-icons/hi';
 import { TbSquareRoundedArrowDown } from 'react-icons/tb';
 import useMenuStore from '../../../stores/menuStore';
@@ -21,13 +21,15 @@ import { Domain } from '../Header/Header';
 import Logo from '../Header/Logo';
 import Navigation from './Navigation';
 import { logout } from '@/app/app/auth/logout/actions';
+import { getUser } from '@/utils/supabase/queries';
+import { createClient } from '@/utils/supabase/client';
 
 const MenuDrawer = ({
   domain,
   user,
 }: {
   domain: Domain;
-  user: User | 'unauthenticated' | undefined;
+  user: User | string | null;
 }) => {
   const { isOpen, onClose } = useDisclosure();
   const { menuIsOpen, setOpen } = useMenuStore();
@@ -94,9 +96,9 @@ const MenuDrawer = ({
             px={4}
             py={0}
           >
-            <Logo domain={domain} user={user} />
+            <Logo domain={domain} />
             <Flex flexDirection='row' gap={8} alignItems='center'>
-              {user && user !== 'unauthenticated' && (
+              {user && (
                 <form action={logout}>
                   <Button type='submit' _hover={{ textDecoration: 'none' }}>
                     Log out
@@ -115,7 +117,9 @@ const MenuDrawer = ({
             </Flex>
           </ModalHeader>
           <ModalBody ref={menu} display='flex' my={6}>
-            <Navigation user={user} />
+            <Suspense>
+              <Navigation user={user} />
+            </Suspense>
             <Icon
               as={TbSquareRoundedArrowDown}
               pos='absolute'

@@ -1,5 +1,6 @@
 'use client';
 
+import CreditModel from '@/app/components/ui/CreditModel/CreditModel';
 import { countryList } from '@/entities/account';
 import { createClient } from '@/utils/supabase/client';
 import { getUserDetails } from '@/utils/supabase/queries';
@@ -63,7 +64,6 @@ export default function AccountForm({ user }: { user: User | null }) {
         setLoading(true);
 
         const { data, error, status } = await getUserDetails(supabase);
-        console.log(data, error, status);
 
         if (error && status !== 406) {
           throw error;
@@ -108,7 +108,7 @@ export default function AccountForm({ user }: { user: User | null }) {
         setLoading(false);
       }
     },
-    [user, setValue, toast]
+    [setValue, toast]
   );
 
   useEffect(() => {
@@ -182,7 +182,7 @@ export default function AccountForm({ user }: { user: User | null }) {
           </Text>
           <Flex width='50%' justifyContent='space-between' alignItems='center'>
             <Text pl={5}>${credit ? credit : 0}</Text>
-            <Button colorScheme='green'>+</Button>
+            <CreditModel />
           </Flex>
         </FormControl>
         <FormControl display='flex' alignItems='center'>
@@ -260,7 +260,7 @@ export default function AccountForm({ user }: { user: User | null }) {
             </FormHelperText>
           </Box>
         </FormControl>
-        <FormControl display='flex' alignItems='center'>
+        <FormControl display='flex' alignItems='center' isRequired>
           <FormLabel flexBasis='50%' mb={4}>
             Postal:
           </FormLabel>
