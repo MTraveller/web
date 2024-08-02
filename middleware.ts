@@ -15,8 +15,6 @@ export const config = {
 };
 
 export default async function middleware(req: NextRequest) {
-  await updateSession(req);
-
   const url = req.nextUrl;
 
   const isDevelopment = process.env.NODE_ENV === 'development';
@@ -30,6 +28,13 @@ export default async function middleware(req: NextRequest) {
   }`;
 
   if (hostname === `app`) {
+    const supabaseResponse = await updateSession(req);
+
+    // Check if `updateSession` returned a redirect response
+    if (supabaseResponse && supabaseResponse.status === 307) {
+      return supabaseResponse; // Return the redirect response immediately
+    }
+
     return NextResponse.rewrite(
       new URL(`/app${path === '/' ? '' : path}`, req.url)
     );

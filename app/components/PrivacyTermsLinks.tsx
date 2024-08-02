@@ -1,21 +1,33 @@
-import { ListItem, UnorderedList } from '@chakra-ui/react';
+'use client';
+
+import getDomain from '@/utils/getDomain';
 import { Link } from '@chakra-ui/next-js';
+import { ListItem, UnorderedList } from '@chakra-ui/react';
 
 const PrivacyTermsLinks = () => {
+  const {
+    domain: { www },
+  } = getDomain();
+
   return (
     <UnorderedList
-      w='full'
       display='flex'
       flexDir='row'
-      fontSize='2xs'
+      fontSize='xs'
+      className='w-28'
       listStyleType='none'
-      justifyContent='space-around'
+      justifyContent='space-between'
+      color='GrayText'
     >
       <ListItem>
-        <Link href='/privacy'>Privacy</Link>
+        <Link href={`${www}/privacy`} _hover={{ textDecoration: 'none' }}>
+          Privacy
+        </Link>
       </ListItem>
       <ListItem>
-        <Link href='/terms'>Terms</Link>
+        <Link href={`${www}/terms`} _hover={{ textDecoration: 'none' }}>
+          Terms
+        </Link>
       </ListItem>
     </UnorderedList>
   );

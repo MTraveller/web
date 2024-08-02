@@ -7,7 +7,8 @@ export const getUser = cache(async (supabase: SupabaseClient) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  return user;
+  if (!user) return null;
+  return { user };
 });
 
 export const getSupaUserWithRedirect = cache(

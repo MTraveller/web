@@ -1,7 +1,8 @@
 import { Grid, GridItem, Text } from '@chakra-ui/react';
-import AuthenticatedGrids from './components/AuthenticatedGrids';
+import Header from './components/ui/Header/Header';
 import './globals.css';
 import { Chakra } from './providers';
+import PrivacyTermsLinks from './components/PrivacyTermsLinks';
 
 export default async function RootLayout({
   children,
@@ -24,14 +25,36 @@ export default async function RootLayout({
             minH='100dvh'
             w='100vw'
           >
-            <AuthenticatedGrids>{children}</AuthenticatedGrids>
+            <GridItem
+              as='header'
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
+              area={'header'}
+              px={4}
+            >
+              <Header />
+            </GridItem>
+            <GridItem
+              width='full'
+              as='main'
+              area={'main'}
+              display='flex'
+              justifyContent='center'
+              py={24}
+              px={[0, 1, 2, 4]}
+            >
+              {children}
+            </GridItem>
             <GridItem
               as='footer'
               display='flex'
-              alignItems='center'
+              flexDirection='column'
               area={'footer'}
+              gap={3}
               px={4}
             >
+              <PrivacyTermsLinks />
               <Text fontSize='xs' color='GrayText'>
                 @ {new Date().getFullYear()} eCom in Motion
               </Text>

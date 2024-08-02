@@ -1,5 +1,3 @@
-import React from 'react';
-
-export default function PrivacyPage() {
+export default async function PrivacyPage() {
   return <div>PrivacyPage</div>;
 }

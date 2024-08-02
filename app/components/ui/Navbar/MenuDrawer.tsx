@@ -1,7 +1,7 @@
 'use client';
 
+import { logout } from '@/app/app/auth/logout/actions';
 import {
-  Box,
   Button,
   Flex,
   Icon,
@@ -13,23 +13,20 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { User } from '@supabase/supabase-js';
-import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { HiOutlineMenuAlt4, HiOutlineX } from 'react-icons/hi';
 import { TbSquareRoundedArrowDown } from 'react-icons/tb';
 import useMenuStore from '../../../stores/menuStore';
 import { Domain } from '../Header/Header';
 import Logo from '../Header/Logo';
 import Navigation from './Navigation';
-import { logout } from '@/app/app/auth/logout/actions';
-import { getUser } from '@/utils/supabase/queries';
-import { createClient } from '@/utils/supabase/client';
 
 const MenuDrawer = ({
   domain,
   user,
 }: {
   domain: Domain;
-  user: User | string | null;
+  user: string | null | undefined;
 }) => {
   const { isOpen, onClose } = useDisclosure();
   const { menuIsOpen, setOpen } = useMenuStore();

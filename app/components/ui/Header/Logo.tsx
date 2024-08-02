@@ -22,7 +22,8 @@ const Logo = ({
 
       <Heading fontSize='xs' fontWeight='500' fontStyle='italic'>
         <Link
-          href={(env === 'dev' ? 'http' : 'https') + `://www.${hostname}`}
+          // href={(env === 'dev' ? 'http' : 'https') + `://www.${hostname}`}
+          href='/'
           _hover={{ textDecoration: 'none' }}
           onClick={handleMenuOpen}
         >

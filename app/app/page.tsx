@@ -1,9 +1,12 @@
-import { getSupaUserWithRedirect } from '@/utils/supabase/getUser';
+import { Flex } from '@chakra-ui/react';
+import AppCards from './AppCards';
+import AppHeading from './AppHeading';
 
 export default async function App() {
-  const {
-    data: { user },
-  } = await getSupaUserWithRedirect();
-
-  return <p>Hello {user.email}</p>;
+  return (
+    <Flex direction='column' gap={8}>
+      <AppHeading />
+      <AppCards />
+    </Flex>
+  );
 }

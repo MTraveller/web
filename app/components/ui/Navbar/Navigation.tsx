@@ -8,22 +8,7 @@ import { createClient } from '@/utils/supabase/client';
 import { useCallback, useEffect, useState } from 'react';
 import { getUser } from '@/utils/supabase/queries';
 
-const Navigation = ({ user }: { user: User | string | null }) => {
-  // const supabase = createClient();
-  // const fetchUser = useCallback(
-  //   async () =>
-  //     await getUser(supabase).then((r) => {
-  //       if (r) setUser(r);
-  //     }),
-  //   []
-  // );
-
-  // const [user, setUser] = useState<User | null>(null);
-
-  // useEffect(() => {
-  //   if (!user) fetchUser();
-  // }, [user, fetchUser]);
-
+const Navigation = ({ user }: { user: string | null | undefined }) => {
   return (
     <VStack w='full' spacing={6} fontSize='large'>
       {user ? <AuthNav /> : <UnAuthNav />}

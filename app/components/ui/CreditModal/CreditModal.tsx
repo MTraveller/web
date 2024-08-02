@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-const CreditModel = () => {
+const CreditModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
@@ -47,4 +47,4 @@ const CreditModel = () => {
   );
 };
 
-export default CreditModel;
+export default CreditModal;

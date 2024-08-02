@@ -19,7 +19,7 @@ export async function login(formData: FormData) {
     options: {
       // set this to false if you do not want the user to be automatically signed up
       shouldCreateUser: true,
-      emailRedirectTo: app + '/welcome',
+      emailRedirectTo: app,
     },
   });
 

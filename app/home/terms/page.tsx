@@ -1,5 +1,3 @@
-import React from 'react';
-
-export default function TermsPage() {
+export default async function TermsPage() {
   return <div>TermsPage</div>;
 }

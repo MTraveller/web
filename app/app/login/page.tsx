@@ -1,4 +1,4 @@
-import { getSupaUserWithoutRedirect } from '@/utils/supabase/queries';
+import { getSupaUserWithoutRedirect, getUser } from '@/utils/supabase/queries';
 import { createClient } from '@/utils/supabase/server';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { redirect } from 'next/navigation';
@@ -7,10 +7,9 @@ import { login } from './actions';
 
 export default async function LoginPage() {
   const supabase = createClient();
-  const user = await getSupaUserWithoutRedirect(supabase).then(
-    (r) => r?.data.user
-  );
-  if (user) redirect('../welcome');
+  const user = await getUser(supabase).then((r) => r?.user);
+
+  if (user) redirect('/');
 
   return (
     <Flex flex='1' direction='column' alignItems='center' gap={6}>

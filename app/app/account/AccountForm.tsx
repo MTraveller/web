@@ -1,6 +1,7 @@
 'use client';
 
-import CreditModel from '@/app/components/ui/CreditModel/CreditModel';
+import CreditModal from '@/app/components/ui/CreditModal/CreditModal';
+import { useStore, useUserStore } from '@/app/stores/userStore';
 import { countryList } from '@/entities/account';
 import { createClient } from '@/utils/supabase/client';
 import { getUserDetails } from '@/utils/supabase/queries';
@@ -17,7 +18,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SupabaseClient, type User } from '@supabase/supabase-js';
+import { SupabaseClient } from '@supabase/supabase-js';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BeatLoader } from 'react-spinners';
@@ -45,7 +46,11 @@ type Inputs = {
   country: string | null;
 };
 
-export default function AccountForm({ user }: { user: User | null }) {
+export default function AccountForm() {
+  // { user }: { user: User | null }
+  const id = useStore(useUserStore, (state) => state.id);
+  const email = useStore(useUserStore, (state) => state.email);
+
   const supabase = createClient();
   const toast = useToast();
 
@@ -113,7 +118,8 @@ export default function AccountForm({ user }: { user: User | null }) {
 
   useEffect(() => {
     getProfile(supabase);
-  }, [user, getProfile, supabase]);
+    console.log(id);
+  }, [id, getProfile, supabase]);
 
   const onSubmit = async ({
     first_name,
@@ -134,7 +140,7 @@ export default function AccountForm({ user }: { user: User | null }) {
       setLoading(true);
 
       const { error } = await supabase.from('users').upsert({
-        id: user?.id as string,
+        id: id as string,
         updated_at: new Date().toISOString(),
         first_name,
         last_name,
@@ -182,7 +188,7 @@ export default function AccountForm({ user }: { user: User | null }) {
           </Text>
           <Flex width='50%' justifyContent='space-between' alignItems='center'>
             <Text pl={5}>${credit ? credit : 0}</Text>
-            <CreditModel />
+            <CreditModal />
           </Flex>
         </FormControl>
         <FormControl display='flex' alignItems='center'>
@@ -190,7 +196,7 @@ export default function AccountForm({ user }: { user: User | null }) {
             Email:
           </FormLabel>
           <Box flexBasis='50%'>
-            <Input type='text' value={user?.email} disabled />
+            <Input type='text' value={email ?? ''} disabled />
             <FormHelperText
               mt={1}
               pl={4}

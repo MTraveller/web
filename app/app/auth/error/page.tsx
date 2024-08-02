@@ -1,12 +1,10 @@
 import { Suspense } from 'react';
 import Error from './Error';
 
-function ErrorPage() {
+export default async function ErrorPage() {
   return (
     <Suspense>
       <Error />
     </Suspense>
   );
 }
-
-export default ErrorPage;
