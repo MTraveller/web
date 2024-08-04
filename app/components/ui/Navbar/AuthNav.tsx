@@ -1,5 +1,6 @@
 'use client';
 
+import useMenuStore from '@/app/stores/menuStore';
 import getDomain from '@/utils/getDomain';
 import { Link } from '@chakra-ui/next-js';
 import {
@@ -12,7 +13,6 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { MdSubdirectoryArrowRight } from 'react-icons/md';
-import useMenuStore from '@/app/stores/menuStore';
 
 const AuthNav = () => {
   const {
@@ -35,13 +35,13 @@ const AuthNav = () => {
         <Box height='full' mx={4}>
           <Divider orientation='vertical' borderWidth={1.5} />
         </Box>
-        <Link href={`${www}/#about`} onClick={handleMenuOpen}>
+        <Link href={`${www}/about`} onClick={handleMenuOpen}>
           About
         </Link>
         <Box height='full' mx={4}>
           <Divider orientation='vertical' borderWidth={1.5} />
         </Box>
-        <Link width='80px' href={`${www}/#contact`} onClick={handleMenuOpen}>
+        <Link width='80px' href={`${www}/contact`} onClick={handleMenuOpen}>
           Contact
         </Link>
       </HStack>
@@ -57,14 +57,14 @@ const AuthNav = () => {
           Tools
         </AbsoluteCenter>
       </Box>
-      <Link href='/niches' onClick={handleMenuOpen}>
-        Niche Ideas
+      <Link href='/niche-ai' onClick={handleMenuOpen}>
+        Niche AI
       </Link>
       <VStack>
-        <Link href='/gsap' onClick={handleMenuOpen}>
-          Average Price
+        <Link href='/gs-average-price' onClick={handleMenuOpen}>
+          GS Average Price
         </Link>
-        <Link href='/gsap/previous' onClick={handleMenuOpen}>
+        <Link href='/gs-average-price/previous' onClick={handleMenuOpen}>
           <Text fontSize='xs'>
             <Icon ml={6} as={MdSubdirectoryArrowRight} />
             Previous

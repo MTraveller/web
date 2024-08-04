@@ -18,7 +18,7 @@ const UnAuthNav = () => {
         <Link
           width='80px'
           textAlign='end'
-          href={`${www}/#about`}
+          href={`${www}/about`}
           onClick={handleMenuOpen}
         >
           About
@@ -26,7 +26,7 @@ const UnAuthNav = () => {
         <Box height='full' mx={4}>
           <Divider orientation='vertical' borderWidth={1.5} />
         </Box>
-        <Link width='80px' href={`${www}/#contact`} onClick={handleMenuOpen}>
+        <Link width='80px' href={`${www}/contact`} onClick={handleMenuOpen}>
           Contact
         </Link>
       </HStack>
@@ -43,11 +43,11 @@ const UnAuthNav = () => {
         </AbsoluteCenter>
       </Box>
       <VStack>
-        <Link href={`${www}/#niches`} onClick={handleMenuOpen}>
-          Niche Ideas
+        <Link href={`${www}/niche-ai-tool`} onClick={handleMenuOpen}>
+          Niche AI
         </Link>
-        <Link href={`${www}/#gsap`} onClick={handleMenuOpen}>
-          Average Price
+        <Link href={`${www}/gsap-tool`} onClick={handleMenuOpen}>
+          GS Average Price
         </Link>
       </VStack>
     </>

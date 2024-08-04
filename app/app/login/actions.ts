@@ -1,10 +1,10 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
-
 import getDomain from '@/utils/getDomain';
 import { createClient } from '@/utils/supabase/server';
+import { Provider } from '@supabase/supabase-js';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 export async function login(formData: FormData) {
   const supabase = createClient();
@@ -12,12 +12,9 @@ export async function login(formData: FormData) {
     domain: { app },
   } = getDomain();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
   const { data, error } = await supabase.auth.signInWithOtp({
     email: formData.get('email') as string,
     options: {
-      // set this to false if you do not want the user to be automatically signed up
       shouldCreateUser: true,
       emailRedirectTo: app,
     },
@@ -29,4 +26,27 @@ export async function login(formData: FormData) {
 
   revalidatePath('./auth/verify', 'layout');
   return redirect('./auth/verify');
+}
+
+export async function oAuthLogin(provider: Provider) {
+  const supabase = createClient();
+
+  const {
+    domain: { app },
+  } = getDomain();
+
+  const callback = '/auth/callback';
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider,
+    options: {
+      redirectTo: app + callback,
+    },
+  });
+
+  if (error?.code) {
+    return redirect(`./auth/error?e=${error.code}`);
+  }
+
+  return redirect(data.url!);
 }

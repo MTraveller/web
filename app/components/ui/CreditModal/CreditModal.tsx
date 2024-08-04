@@ -1,6 +1,5 @@
 'use client';
 
-import StripeForm from '@/app/app/account/stripe/StripeForm';
 import {
   Modal,
   ModalOverlay,
@@ -11,6 +10,7 @@ import {
   ModalCloseButton,
   Button,
   useDisclosure,
+  Text,
 } from '@chakra-ui/react';
 
 const CreditModal = () => {
@@ -32,7 +32,7 @@ const CreditModal = () => {
           <ModalHeader>Purchase Credits</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <StripeForm />
+            <Text>Product Cards</Text>
           </ModalBody>
 
           <ModalFooter>

@@ -1,10 +1,12 @@
 'use client';
 
+import { ButtonLink } from '@/app/components/ButtonLink';
 import CreditModal from '@/app/components/ui/CreditModal/CreditModal';
 import { useStore, useUserStore } from '@/app/stores/userStore';
 import { countryList } from '@/entities/account';
 import { createClient } from '@/utils/supabase/client';
 import { getUserDetails } from '@/utils/supabase/queries';
+import Link from 'next/link';
 import {
   Box,
   Button,
@@ -47,7 +49,6 @@ type Inputs = {
 };
 
 export default function AccountForm() {
-  // { user }: { user: User | null }
   const id = useStore(useUserStore, (state) => state.id);
   const email = useStore(useUserStore, (state) => state.email);
 
@@ -77,9 +78,11 @@ export default function AccountForm() {
         if (data) {
           const { first_name, last_name, available_credit, billing_address } =
             data;
-          setValue('first_name', first_name, { shouldValidate: true });
-          setValue('last_name', last_name, { shouldValidate: true });
-          setCredit(available_credit);
+          if (first_name)
+            setValue('first_name', first_name, { shouldValidate: true });
+          if (last_name)
+            setValue('last_name', last_name, { shouldValidate: true });
+          if (available_credit) setCredit(available_credit);
 
           if (billing_address) {
             const {
@@ -118,8 +121,7 @@ export default function AccountForm() {
 
   useEffect(() => {
     getProfile(supabase);
-    console.log(id);
-  }, [id, getProfile, supabase]);
+  }, [getProfile, supabase]);
 
   const onSubmit = async ({
     first_name,
@@ -188,7 +190,13 @@ export default function AccountForm() {
           </Text>
           <Flex width='50%' justifyContent='space-between' alignItems='center'>
             <Text pl={5}>${credit ? credit : 0}</Text>
-            <CreditModal />
+            <ButtonLink
+              size='sm'
+              weight='500'
+              color='green'
+              label='Purchase Credits'
+              path='/account/credits'
+            />
           </Flex>
         </FormControl>
         <FormControl display='flex' alignItems='center'>

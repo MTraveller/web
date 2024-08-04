@@ -37,12 +37,15 @@ export default async function RootLayout({
             </GridItem>
             <GridItem
               width='full'
+              maxWidth='5xl'
               as='main'
               area={'main'}
               display='flex'
-              justifyContent='center'
+              flexDirection='column'
+              justifySelf='center'
+              gap={8}
               py={24}
-              px={[0, 1, 2, 4]}
+              px={[2, 3, 4, 6]}
             >
               {children}
             </GridItem>

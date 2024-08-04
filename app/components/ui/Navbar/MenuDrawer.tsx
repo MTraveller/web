@@ -1,6 +1,5 @@
 'use client';
 
-import { logout } from '@/app/app/auth/logout/actions';
 import {
   Button,
   Flex,
@@ -8,15 +7,18 @@ import {
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { User } from '@supabase/supabase-js';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { HiOutlineMenuAlt4, HiOutlineX } from 'react-icons/hi';
 import { TbSquareRoundedArrowDown } from 'react-icons/tb';
 import useMenuStore from '../../../stores/menuStore';
+import Logout from '../../Logout';
+import PrivacyTermsLinks from '../../PrivacyTermsLinks';
 import { Domain } from '../Header/Header';
 import Logo from '../Header/Logo';
 import Navigation from './Navigation';
@@ -35,9 +37,9 @@ const MenuDrawer = ({
 
   const menu = useRef(null);
 
-  useEffect(() => {
-    setOpen(isOpen);
-  }, [isOpen, setOpen]);
+  // useEffect(() => {
+  //   setOpen(isOpen);
+  // }, [isOpen, setOpen]);
 
   const handleDownIcon = () => {
     if (menu.current) {
@@ -60,6 +62,13 @@ const MenuDrawer = ({
         });
       }
     }
+  };
+
+  const handleClick = () => {
+    console.log('isOpen', isOpen);
+    console.log('menuIsOpen', menuIsOpen);
+    console.log('setOpen', !!isOpen);
+    setOpen(!!isOpen);
   };
 
   return (
@@ -93,21 +102,15 @@ const MenuDrawer = ({
             px={4}
             py={0}
           >
-            <Logo domain={domain} />
+            <Logo domain={domain} user={user} />
             <Flex flexDirection='row' gap={8} alignItems='center'>
-              {user && (
-                <form action={logout}>
-                  <Button type='submit' _hover={{ textDecoration: 'none' }}>
-                    Log out
-                  </Button>
-                </form>
-              )}
+              {user && <Logout />}
               <Button
                 w='60px'
                 h='50px'
                 border='1px'
                 bgColor='transparent'
-                onClick={() => setOpen(false)}
+                onClick={handleClick}
               >
                 <Icon as={HiOutlineX} fontSize='lg' />
               </Button>
@@ -125,6 +128,20 @@ const MenuDrawer = ({
               display={showDownIcon ? 'none' : 'inline-block'}
             />
           </ModalBody>
+          <ModalFooter
+            minH='60px'
+            display='flex'
+            flexDirection='column'
+            alignItems='start'
+            gap={3}
+            px={4}
+            py={3}
+          >
+            <PrivacyTermsLinks handleClick={handleClick} />
+            <Text fontSize='xs' color='GrayText'>
+              @ {new Date().getFullYear()} eCom in Motion
+            </Text>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

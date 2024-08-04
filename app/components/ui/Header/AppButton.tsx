@@ -1,14 +1,7 @@
-'use client';
-
-import { logout } from '@/app/app/auth/logout/actions';
-import {
-  useStore,
-  useUserDetailsStore,
-  useUserStore,
-} from '@/app/stores/userStore';
-import { Link } from '@chakra-ui/next-js';
+import { ButtonLink } from '@/app/components/ButtonLink';
+import Loader from '@/app/components/Loader';
 import { Button } from '@chakra-ui/react';
-import Loader from '../../Loader';
+import Logout from '../../Logout';
 
 const AppButton = ({
   domain: { path, env, hostname },
@@ -17,34 +10,13 @@ const AppButton = ({
   domain: { path: string; env: string; hostname: string };
   user: string | null | undefined;
 }) => {
-  const userState = useStore(useUserStore, (state) => state);
-  const userDetailsState = useStore(useUserDetailsStore, (state) => state);
-
-  const doLogout = () => {
-    const removeUser = userState?.removeUser;
-    const removeUserDetails = userDetailsState?.removeUserDetails;
-
-    if (removeUser && removeUserDetails) {
-      removeUser();
-      removeUserDetails();
-    }
-  };
-
   if (path === '/login') return null;
 
   if (user)
     return path === '/account' ? (
-      <form action={logout} onSubmit={doLogout}>
-        <Button type='submit' _hover={{ textDecoration: 'none' }}>
-          Log out
-        </Button>
-      </form>
+      <Logout />
     ) : (
-      <Button>
-        <Link href='/account' _hover={{ textDecoration: 'none' }}>
-          Account
-        </Link>
-      </Button>
+      <ButtonLink label='Account' path='/account' />
     );
 
   if (user === undefined)
@@ -55,15 +27,13 @@ const AppButton = ({
     );
 
   return (
-    <Button>
-      <Link
-        href={(env === 'dev' ? 'http' : 'https') + `://app.${hostname}/login`}
-        _hover={{ textDecoration: 'none' }}
-        target='_self'
-      >
-        Log in
-      </Link>
-    </Button>
+    !user &&
+    path !== '/account' && (
+      <ButtonLink
+        label='Log in'
+        path={`${env === 'dev' ? 'http' : 'https'}://app.${hostname}/login`}
+      />
+    )
   );
 };
 

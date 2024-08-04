@@ -5,12 +5,20 @@ import { getUser, getUserDetails } from '@/utils/supabase/queries';
 import { Heading } from '@chakra-ui/react';
 import { useCallback, useEffect } from 'react';
 import { useStore } from 'zustand';
-import Loader from '../components/Loader';
 import { useUserDetailsStore, useUserStore } from '../stores/userStore';
 
 export default function AppHeading() {
-  const userState = useStore(useUserStore, (state) => state);
-  const detailsState = useStore(useUserDetailsStore, (state) => state);
+  const { id, setUser } = useStore(useUserStore, (state) => ({
+    id: state.id,
+    setUser: state.setUser,
+  }));
+  const { setUserDetails, firstname } = useStore(
+    useUserDetailsStore,
+    (state) => ({
+      setUserDetails: state.setUserDetails,
+      firstname: state.first_name,
+    })
+  );
   const supabase = createClient();
 
   const fetchUserId = useCallback(async () => {
@@ -18,7 +26,7 @@ export default function AppHeading() {
       const {
         user: { id, email },
       } = res as { user: { id: string; email: string } };
-      if (userState) userState.setUser(id, email);
+      if (setUser) setUser(id, email);
     }),
       await getUserDetails(supabase).then((res) => {
         const { data, status } = res;
@@ -29,8 +37,8 @@ export default function AppHeading() {
           first_name,
           last_name,
         } = data;
-        if (detailsState && data && status !== 406)
-          detailsState.setUserDetails(
+        if (data && status !== 406)
+          setUserDetails(
             available_credit,
             avatar_url,
             billing_address,
@@ -38,11 +46,11 @@ export default function AppHeading() {
             last_name
           );
       });
-  }, [supabase, userState, detailsState]);
+  }, [supabase, setUser, setUserDetails]);
 
   useEffect(() => {
-    if (!userState?.id) fetchUserId();
-  }, [userState, fetchUserId]);
+    if (!id) fetchUserId();
+  }, [id, setUser, fetchUserId]);
 
-  return <Heading>Welcome {detailsState?.first_name ?? <Loader />}</Heading>;
+  return <Heading>Welcome {firstname ?? ''}</Heading>;
 }

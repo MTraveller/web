@@ -1,4 +1,4 @@
-import { getSupaUserWithoutRedirect, getUser } from '@/utils/supabase/queries';
+import { getUser } from '@/utils/supabase/queries';
 import { createClient } from '@/utils/supabase/server';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { redirect } from 'next/navigation';

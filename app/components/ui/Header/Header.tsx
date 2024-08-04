@@ -51,7 +51,7 @@ const Header = () => {
 
   return (
     <>
-      <Logo domain={domainDetails} />
+      <Logo domain={domainDetails} user={id} />
       <HStack spacing={8}>
         <AppButton domain={domainDetails} user={id} />
         <MenuDrawer domain={domainDetails} user={id} />

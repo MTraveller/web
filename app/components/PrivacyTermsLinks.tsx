@@ -1,10 +1,8 @@
-'use client';
-
 import getDomain from '@/utils/getDomain';
-import { Link } from '@chakra-ui/next-js';
 import { ListItem, UnorderedList } from '@chakra-ui/react';
+import { ChakraLink } from './ChakraLink';
 
-const PrivacyTermsLinks = () => {
+const PrivacyTermsLinks = ({ handleClick }: { handleClick?: () => void }) => {
   const {
     domain: { www },
   } = getDomain();
@@ -20,14 +18,14 @@ const PrivacyTermsLinks = () => {
       color='GrayText'
     >
       <ListItem>
-        <Link href={`${www}/privacy`} _hover={{ textDecoration: 'none' }}>
-          Privacy
-        </Link>
+        <ChakraLink
+          href={`${www}/privacy`}
+          label='Privacy'
+          onClick={handleClick}
+        />
       </ListItem>
       <ListItem>
-        <Link href={`${www}/terms`} _hover={{ textDecoration: 'none' }}>
-          Terms
-        </Link>
+        <ChakraLink href={`${www}/terms`} label='Terms' onClick={handleClick} />
       </ListItem>
     </UnorderedList>
   );

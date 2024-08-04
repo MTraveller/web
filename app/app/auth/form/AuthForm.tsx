@@ -10,11 +10,12 @@ import {
   HStack,
   Stack,
 } from '@chakra-ui/react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { BeatLoader } from 'react-spinners';
-import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { OAuthButtons } from '../../login/oauth-login';
 
 const schema = z.object({
   email: z.string().email(),
@@ -63,10 +64,12 @@ const AuthForm = ({ action }: AuthForm) => {
         <Heading as='h1' size='lg'>
           Log in to your account
         </Heading>
-        <Heading as='h2' size='sm'>
+        <Heading as='h2' size='sm' mb={6}>
           Continue with your preferred method
         </Heading>
-        <HStack></HStack>
+        <HStack>
+          <OAuthButtons />
+        </HStack>
         <Center height={4}>
           <Divider />
         </Center>
