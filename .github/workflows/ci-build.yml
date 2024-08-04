@@ -12,7 +12,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      BUILD_CONFIGURATION: build_Test
+      NEXT_PUBLIC_ROOT_DOMAIN: ${{secrets.NEXT_PUBLIC_ROOT_DOMAIN}}
+      NEXT_PUBLIC_SUPABASE_URL: ${{secrets.NEXT_PUBLIC_SUPABASE_URL}}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY}}
 
     steps:
       - uses: actions/checkout@v4

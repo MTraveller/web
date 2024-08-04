@@ -1,11 +1,4 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  ListItem,
-  OrderedList,
-  Text,
-} from '@chakra-ui/react';
+import { Flex, Heading, ListItem, OrderedList, Text } from '@chakra-ui/react';
 
 export default async function Home() {
   return (

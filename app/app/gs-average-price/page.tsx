@@ -1,15 +1,14 @@
-import { Box, Heading, Text } from '@chakra-ui/react';
-import React from 'react';
+import { Box, Heading } from '@chakra-ui/react';
 
-export default function CreditPage() {
+export default async function GSAPPage() {
   return (
     <>
       <Box>
         <Heading as='h1' fontWeight='800'>
-          Purchase Credits
+          GS Average Price Tool
         </Heading>
         <Heading as='h2' fontWeight='400' fontSize='lg'>
-          Please select the amount to continue.
+          Grab The Average Price of Any Product, Using Google Shopping.
         </Heading>
       </Box>
     </>

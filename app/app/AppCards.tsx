@@ -1,6 +1,3 @@
-'use client';
-
-import { Link } from '@chakra-ui/next-js';
 import {
   Box,
   Card,
@@ -11,6 +8,8 @@ import {
   StackDivider,
   Text,
 } from '@chakra-ui/react';
+import { ChakraLink } from '../components/ChakraLink';
+import { ChakraLinkWithChildren } from '../components/ChakraLinkWithChildren';
 
 export default function AppCards() {
   return (
@@ -21,26 +20,26 @@ export default function AppCards() {
 
       <CardBody>
         <Stack divider={<StackDivider />} spacing='4'>
-          <Link href='/niches'>
+          <ChakraLinkWithChildren href='/niche-ai' hover={true}>
             <Box>
               <Heading size='xs' textTransform='uppercase'>
-                Niche Idea's
+                Niche AI Tool
               </Heading>
               <Text pt='2' fontSize='sm'>
                 Make a niche list using the latest chatGPT tool.
               </Text>
             </Box>
-          </Link>
-          <Link href='/gsap'>
+          </ChakraLinkWithChildren>
+          <ChakraLinkWithChildren href='/gs-average-price' hover={true}>
             <Box>
               <Heading size='xs' textTransform='uppercase'>
-                GSAP
+                GS Average Price Tool
               </Heading>
               <Text pt='2' fontSize='sm'>
                 Extract the average price of keywords from google shopping.
               </Text>
             </Box>
-          </Link>
+          </ChakraLinkWithChildren>
         </Stack>
       </CardBody>
     </Card>

@@ -1,15 +1,14 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
-import React from 'react';
 
-export default function CreditPage() {
+export default async function NichesPage() {
   return (
     <>
       <Box>
         <Heading as='h1' fontWeight='800'>
-          Purchase Credits
+          Niche AI Tool
         </Heading>
         <Heading as='h2' fontWeight='400' fontSize='lg'>
-          Please select the amount to continue.
+          Generate 50 High-Ticket Products Using chatGPT
         </Heading>
       </Box>
     </>

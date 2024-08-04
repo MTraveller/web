@@ -2,10 +2,10 @@ import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 
 export default async function Home() {
   return (
-    <Flex flexDirection='column' gap={16}>
+    <>
       <Heading
         as='h1'
-        fontSize='6xl'
+        fontSize={['4xl', '6xl']}
         fontWeight='800'
         fontStyle='italic'
         textAlign='center'
@@ -77,6 +77,6 @@ export default async function Home() {
           ultimately, maximize your returns.
         </Text>
       </Flex>
-    </Flex>
+    </>
   );
 }
