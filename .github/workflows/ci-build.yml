@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      BUILD_CONFIGURATION: build_Test
 
     steps:
       - uses: actions/checkout@v4
