@@ -1,13 +1,13 @@
 'use client';
 
 import { ButtonLink } from '@/app/components/ButtonLink';
-import CreditModal from '@/app/components/ui/CreditModal/CreditModal';
 import { useStore, useUserStore } from '@/app/stores/userStore';
 import { countryList } from '@/entities/account';
 import { createClient } from '@/utils/supabase/client';
 import { getUserDetails } from '@/utils/supabase/queries';
-import Link from 'next/link';
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   Flex,
@@ -63,6 +63,7 @@ export default function AccountForm() {
   } = useForm<Inputs>({ resolver: zodResolver(schema) });
   const [loading, setLoading] = useState(true);
   const [credit, setCredit] = useState(null);
+  const [isUserDetails, setIsUserDetails] = useState(false);
 
   const getProfile = useCallback(
     async (supabase: SupabaseClient) => {
@@ -78,8 +79,10 @@ export default function AccountForm() {
         if (data) {
           const { first_name, last_name, available_credit, billing_address } =
             data;
-          if (first_name)
+          if (first_name) {
+            setIsUserDetails(true);
             setValue('first_name', first_name, { shouldValidate: true });
+          }
           if (last_name)
             setValue('last_name', last_name, { shouldValidate: true });
           if (available_credit) setCredit(available_credit);
@@ -103,6 +106,8 @@ export default function AccountForm() {
             setValue('country', country, { shouldValidate: true });
           }
         }
+
+        return data;
       } catch (error) {
         toast({
           title: 'Error loading user data!',
@@ -179,7 +184,14 @@ export default function AccountForm() {
   };
 
   return (
-    <Flex className='form-widget' minW='80%'>
+    <>
+      {!loading && !isUserDetails && (
+        <Alert status='warning' variant='left-accent'>
+          <AlertIcon />
+          Your personal details must be entered to use any of the tools on eCom
+          in Motion!
+        </Alert>
+      )}
       <form
         className='flex flex-1 flex-col gap-8'
         onSubmit={handleSubmit(onSubmit)}
@@ -349,6 +361,6 @@ export default function AccountForm() {
           {loading ? 'Loading ...' : 'Update'}
         </Button>
       </form>
-    </Flex>
+    </>
   );
 }

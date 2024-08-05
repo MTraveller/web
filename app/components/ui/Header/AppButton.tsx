@@ -6,9 +6,11 @@ import Logout from '../../Logout';
 const AppButton = ({
   domain: { path, env, hostname },
   user,
+  loading,
 }: {
   domain: { path: string; env: string; hostname: string };
   user: string | null | undefined;
+  loading: boolean;
 }) => {
   if (path === '/login') return null;
 
@@ -27,6 +29,7 @@ const AppButton = ({
     );
 
   return (
+    !loading &&
     !user &&
     path !== '/account' && (
       <ButtonLink

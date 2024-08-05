@@ -22,6 +22,7 @@ export interface UserExtended extends User {
 
 const Header = () => {
   const env = process.env.NODE_ENV as 'development' | 'production';
+  const [loading, setLoading] = useState(true);
   const [subdomain, setSubdomain] = useState<string>('');
   const path = usePathname();
 
@@ -30,6 +31,7 @@ const Header = () => {
   useEffect(() => {
     if (typeof window !== 'undefined')
       setSubdomain(window.location.host.split('.')[0]);
+    setLoading(false);
   }, []);
 
   const hostname = {
@@ -53,7 +55,7 @@ const Header = () => {
     <>
       <Logo domain={domainDetails} user={id} />
       <HStack spacing={8}>
-        <AppButton domain={domainDetails} user={id} />
+        <AppButton domain={domainDetails} user={id} loading={loading} />
         <MenuDrawer domain={domainDetails} user={id} />
       </HStack>
     </>
