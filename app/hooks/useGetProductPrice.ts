@@ -17,7 +17,6 @@ const useGetProductPrice = () => {
   const doFetch = form && isQuery;
 
   const dataForm = form && JSON.parse(form);
-
   const { countryCode, currency }: DataForm = dataForm ?? [];
 
   return useQueries({
@@ -29,7 +28,7 @@ const useGetProductPrice = () => {
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,
-        staleTime: Infinity,
+        retry: false,
       })) ?? [],
   });
 };

@@ -37,7 +37,10 @@ const AutoComplete = ({ inputRef, change, setValue, rest }: AutoComplete) => {
 
   const handleCountryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue('country', e.target.value);
-    if (countryInputRef.current?.value === '') setValue('countryCode', 'US');
+    if (countryInputRef.current?.value === '') {
+      setValue('countryCode', 'US');
+      setValue('currency', '$');
+    }
 
     setCountryListVisible(true);
   };
@@ -125,7 +128,9 @@ const AutoComplete = ({ inputRef, change, setValue, rest }: AutoComplete) => {
     <VStack>
       <InputGroup display='flex' flexDir='column'>
         <Input
+          id='input-country'
           placeholder='Choose market'
+          autoComplete='country'
           {...rest}
           name='country'
           ref={(e) => {

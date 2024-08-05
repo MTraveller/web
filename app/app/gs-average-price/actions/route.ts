@@ -1,6 +1,12 @@
 'use server';
 
-import { AvgPrices, ZyteArgs, ZyteConfig, productList } from '@/entities/zyte';
+import {
+  AvgPrice,
+  ZyteArgs,
+  ZyteConfig,
+  ZyteRes,
+  productList,
+} from '@/entities/zyte';
 import { Zyte } from '@/services/zyte-api-client';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -25,13 +31,23 @@ async function zyte({ keyword, countryCode }: ZyteArgs) {
     } as ZyteConfig)
     .then((res) => {
       const prices: number[] = [];
-      res.productList.products?.map((product: productList) =>
-        prices.push(parseInt(product.price))
+      res.productList.products?.map(
+        (product: productList) =>
+          !isNaN(parseInt(product.price)) &&
+          prices.push(parseInt(product.price))
       );
 
       return {
         keyword: keyword.replaceAll('+', ' '),
         prices,
+      };
+    })
+    .catch((err) => {
+      const { title, status } = err.response.data;
+
+      return {
+        keyword: keyword.replaceAll('+', ' '),
+        prices: { message: title, status: status },
       };
     });
 }
@@ -50,14 +66,24 @@ export async function POST(req: NextRequest, res: NextResponse) {
   if (body) {
     const formData = await JSON.parse(body.data);
     if (formData.keyword) {
-      const avgPrices: AvgPrices[] = [];
+      const avgPrice: AvgPrice[] = [];
 
-      const { keyword, prices } = await zyte({
+      const { keyword, prices } = (await zyte({
         keyword: formData.keyword,
         countryCode: formData.countryCode,
-      });
+      })) as ZyteRes;
 
-      avgPrices.push({
+      if (prices?.status) {
+        avgPrice.push({
+          keyword,
+          currency: formData.currency,
+          avgPrice: 0,
+          error: prices.message,
+        });
+        return NextResponse.json(JSON.stringify(avgPrice));
+      }
+
+      avgPrice.push({
         keyword,
         currency: formData.currency,
         avgPrice: Math.floor(
@@ -69,7 +95,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         ),
       });
 
-      return NextResponse.json(JSON.stringify(avgPrices), { status: 200 });
+      return NextResponse.json(JSON.stringify(avgPrice), { status: 200 });
     }
     return NextResponse.json(
       {

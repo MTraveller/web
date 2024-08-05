@@ -68,6 +68,7 @@ export interface AvgPrices {
   keyword: string;
   currency: string;
   avgPrice: number;
+  error?: string;
 }
 
 export type DataKeywords = {

@@ -14,7 +14,7 @@ const BreakPointFlex = ({ children }: PropsWithChildren) => {
       pos='sticky'
       top='40px'
       flexBasis='auto'
-      flex='4'
+      flex='2'
       flexDir='column'
       gap={6}
     >

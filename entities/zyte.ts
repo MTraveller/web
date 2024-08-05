@@ -1,9 +1,10 @@
 import { AxiosRequestConfig } from 'axios';
 
-export interface AvgPrices {
+export interface AvgPrice {
   keyword: string;
   currency: string;
   avgPrice: number;
+  error?: string;
 }
 
 export interface ZyteArgs {
@@ -35,3 +36,15 @@ export interface Auth {
 export interface productList {
   price: string;
 }
+
+type PricesArr = {
+  keyword: string;
+  prices: number[];
+};
+
+type PricesErr = {
+  keyword: string;
+  prices: { message: string; status: number };
+};
+
+export type ZyteRes = PricesArr & PricesErr;

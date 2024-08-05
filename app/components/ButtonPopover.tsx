@@ -5,6 +5,7 @@ import {
   PopoverBody,
   PopoverCloseButton,
   PopoverContent,
+  PopoverFooter,
   PopoverHeader,
   PopoverTrigger,
 } from '@chakra-ui/react';
@@ -17,8 +18,8 @@ interface PopoverProps {
   button: JSX.Element;
   header: string;
   body: string;
-  path: string;
-  pathText: string;
+  href: string;
+  label: string;
 }
 
 function ButtonPopover({
@@ -28,8 +29,8 @@ function ButtonPopover({
   button,
   header,
   body,
-  path,
-  pathText,
+  href,
+  label,
 }: PopoverProps) {
   return (
     <Popover isLazy placement={placement} isOpen={isOpen} onClose={onClose}>
@@ -41,7 +42,8 @@ function ButtonPopover({
         </PopoverHeader>
         <PopoverCloseButton />
         <PopoverBody pt={0}>
-          {body} <ChakraLink href={path} label={pathText} />
+          {body}{' '}
+          <ChakraLink href={href} label={label} color='blue.500' hover={true} />
         </PopoverBody>
       </PopoverContent>
     </Popover>

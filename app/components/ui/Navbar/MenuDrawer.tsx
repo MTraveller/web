@@ -65,9 +65,6 @@ const MenuDrawer = ({
   };
 
   const handleClick = () => {
-    console.log('isOpen', isOpen);
-    console.log('menuIsOpen', menuIsOpen);
-    console.log('setOpen', !!isOpen);
     setOpen(!!isOpen);
   };
 

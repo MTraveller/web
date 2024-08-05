@@ -68,6 +68,7 @@ export default function GSAPForm({ doSubmit, loading }: FormProps) {
           Separate each keyword with a new line as shown in the box.
         </FormHelperText>
         <Textarea
+          id='input-keywords'
           rows={12}
           placeholder={`Keyword 1\nKeyword 2\netc...`}
           {...register('keywords', { required: true })}
@@ -112,8 +113,8 @@ export default function GSAPForm({ doSubmit, loading }: FormProps) {
             body={`
               To view previous submissions, please refer to 
             `}
-            path='previous'
-            pathText='previous prices page'
+            href='/gs-average-price/previous'
+            label='previous prices page'
           />
         </Fade>
         <Fade

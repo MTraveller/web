@@ -8,7 +8,6 @@ import {
   StackDivider,
   Text,
 } from '@chakra-ui/react';
-import { ChakraLink } from '../components/ChakraLink';
 import { ChakraLinkWithChildren } from '../components/ChakraLinkWithChildren';
 
 export default function AppCards() {
