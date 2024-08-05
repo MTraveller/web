@@ -4,7 +4,7 @@ const instance = axios.create({
   baseURL:
     process.env.NODE_ENV === 'development'
       ? 'http://app.localhost:3000/gs-average-price'
-      : 'https://api.ecominmotion.com/gs-average-price',
+      : 'https://app.ecominmotion.com/gs-average-price',
 });
 
 class APIClient {
