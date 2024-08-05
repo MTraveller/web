@@ -53,7 +53,7 @@ export default function AppHeading() {
   }, [id, setUser, fetchUserId]);
 
   return (
-    <Heading as='h1' fontWeight='800'>
+    <Heading as='h1' fontWeight='700'>
       Welcome {firstname ?? ''}
     </Heading>
   );

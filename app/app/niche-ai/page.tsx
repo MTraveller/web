@@ -4,7 +4,7 @@ export default async function NichesPage() {
   return (
     <>
       <Box>
-        <Heading as='h1' fontWeight='800'>
+        <Heading as='h1' fontWeight='700'>
           Niche AI Tool
         </Heading>
         <Heading as='h2' fontWeight='400' fontSize='lg'>
